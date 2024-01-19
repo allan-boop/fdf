@@ -6,18 +6,16 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 15:54:03 by ahans             #+#    #+#             */
-/*   Updated: 2024/01/18 18:09:12 by ahans            ###   ########.fr       */
+/*   Updated: 2024/01/19 15:16:38 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 
-#include <libft.h>
-#include <unistd.h>
-#include <stdio.h>
-#include "MLX42.h"
-
-void test();
+# include "libft.h"
+# include <unistd.h>
+# include <stdio.h>
+# include "MLX42.h"
 
 #endif

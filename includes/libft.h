@@ -6,18 +6,28 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 17:09:43 by ahans             #+#    #+#             */
-/*   Updated: 2024/01/05 15:37:59 by ahans            ###   ########.fr       */
+/*   Updated: 2024/01/19 15:54:25 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
+
 # include <unistd.h>
 # include <string.h>
 # include <stdlib.h>
 # include <stdint.h>
 # include <stdarg.h>
+# include <limits.h>
+
+# if (BUFFER_SIZE <= 0 || BUFFER_SIZE > INT_MAX)
+#  undef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
 
 typedef struct s_list
 {
@@ -85,5 +95,6 @@ t_flags	arg_s(va_list arg, t_flags *ret);
 t_flags	arg_c(va_list arg, t_flags *ret);
 t_flags	arg_x(int num, t_flags *ret, char min_maj);
 t_flags	arg_u(unsigned int n, t_flags *ret);
+char	*get_next_line(int fd);
 
 #endif

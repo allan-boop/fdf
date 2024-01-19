@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahans <allan.hans68350@gmail.com>          +#+  +:+       +#+        */
+/*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 11:01:41 by ahans             #+#    #+#             */
-/*   Updated: 2023/10/18 16:41:51 by ahans            ###   ########.fr       */
+/*   Updated: 2024/01/19 16:05:41 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	ft_bzero(void *s, size_t n)
 {
 	char	*str;
 
+	if (!s)
+		return ;
 	str = s;
 	while (n--)
 	{

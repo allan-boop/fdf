@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahans <allan.hans68350@gmail.com>          +#+  +:+       +#+        */
+/*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 16:00:47 by ahans             #+#    #+#             */
-/*   Updated: 2023/10/23 11:17:13 by ahans            ###   ########.fr       */
+/*   Updated: 2024/01/19 16:02:11 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*ft_strdup(const char *source)
 	char	*new;
 
 	i = 0;
+	if (!source)
+		return (NULL);
 	new = (char *)malloc(sizeof(char) * ft_strlen(source) + 1);
 	if (!new)
 		return (NULL);

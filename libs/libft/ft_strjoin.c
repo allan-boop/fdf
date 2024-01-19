@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahans <allan.hans68350@gmail.com>          +#+  +:+       +#+        */
+/*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 14:12:19 by ahans             #+#    #+#             */
-/*   Updated: 2023/10/29 19:00:54 by ahans            ###   ########.fr       */
+/*   Updated: 2024/01/19 16:04:11 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	all_size = ft_strlen(s2) + ft_strlen(s1);
 	str = (char *)malloc((all_size + 1) * sizeof(char));
 	if (!str)
-		return (str);
+		return (NULL);
 	i = 0;
 	while (*s1)
 		str[i++] = *s1++;

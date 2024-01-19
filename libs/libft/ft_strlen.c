@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahans <allan.hans68350@gmail.com>          +#+  +:+       +#+        */
+/*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 11:03:16 by ahans             #+#    #+#             */
-/*   Updated: 2023/10/30 12:08:47 by ahans            ###   ########.fr       */
+/*   Updated: 2024/01/19 16:07:08 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ size_t	ft_strlen(const char *the_string)
 	size_t	i;
 
 	i = 0;
+	if (!the_string)
+		return (0);
 	while (the_string[i] != '\0')
 	{
 		i++;
