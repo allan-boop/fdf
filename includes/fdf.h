@@ -6,7 +6,7 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 15:54:03 by ahans             #+#    #+#             */
-/*   Updated: 2024/01/19 15:16:38 by ahans            ###   ########.fr       */
+/*   Updated: 2024/01/20 17:34:03 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,4 +18,9 @@
 # include <stdio.h>
 # include "MLX42.h"
 
+typedef struct s_map_line
+{
+	int32_t				*points;
+	struct s_map_line	*next;
+}	t_map_line;
 #endif

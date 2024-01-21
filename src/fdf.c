@@ -6,7 +6,7 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 15:53:38 by ahans             #+#    #+#             */
-/*   Updated: 2024/01/19 17:56:42 by ahans            ###   ########.fr       */
+/*   Updated: 2024/01/21 18:22:39 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,38 +15,88 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#define WIDTH 256
-#define HEIGHT 256
+#include <fcntl.h>
 
-static void ft_error(void)
+#define WIDTH 2560
+#define HEIGHT 1440
+
+int	put_line_in_node(char *line, t_map_line *node)
 {
-	fprintf(stderr, "%s", mlx_strerror(mlx_errno));
-	exit(EXIT_FAILURE);
+	char	**points;
+	int		i;
+
+	i = 0;
+	points = ft_split(line, ' ');
+	node->points = malloc(sizeof(int32_t) * ft_strlen(line));
+	while (points[i] != NULL)
+	{
+		node->points[i] = ft_atoi(points[i]);
+		i++;
+	}
+	i = 0;
+	while (points[i] != NULL)
+	{
+		free(points[i]);
+		i++;
+	}
+	free(points);
+	return (EXIT_SUCCESS);
 }
 
-
-int32_t	main(void)
+t_map_line	*put_map_in_struct(char *filename)
 {
-	// MLX allows you to define its core behaviour before startup.
+	t_map_line	*line;
+	int			file;
+	t_map_line	*first_line;
+	char		*str;
+
+	file = open(filename, O_RDONLY);
+	if (!file)
+		return (NULL);
+	str = get_next_line(file);
+	line = malloc(sizeof(t_map_line));
+	if (!line)
+		return (NULL);
+	first_line = line;
+	while (str != NULL)
+	{
+		line->next = malloc(sizeof(t_map_line));
+		if (!line->next)
+			return (NULL);
+		line = line->next;
+		put_line_in_node(str, line);
+		free(str);
+		str = get_next_line(file);
+	}
+	line->next = NULL;
+	close(file);
+	return (first_line);
+}
+
+int32_t	main(int ac, char **av)
+{
+//	t_map_line	*tmp;
+	t_map_line	*curr;
+
+	ac = ac;
+	curr = put_map_in_struct(av[1]);
 	mlx_set_setting(MLX_MAXIMIZED, true);
 	mlx_t* mlx = mlx_init(WIDTH, HEIGHT, "42Balls", true);
 	if (!mlx)
-		ft_error();
-
-	/* Do stuff */
-
-	// Create and display the image.
-	mlx_image_t* img = mlx_new_image(mlx, 256, 256);
+		return (EXIT_FAILURE);
+	mlx_image_t* img = mlx_new_image(mlx, 2560, 1440);
 	if (!img || (mlx_image_to_window(mlx, img, 0, 0) < 0))
-		ft_error();
-
-	// Even after the image is being displayed, we can still modify the buffer.
-	ft_memset(img->pixels, 127, img->width * img->height * 4);
-
-	// Register a hook and pass mlx as an optional param.
-	// NOTE: Do this before calling mlx_loop!
-	// mlx_loop_hook(mlx, ft_hook, mlx);
+		return (EXIT_FAILURE);
+	ft_memset(img->pixels, 127, 2560 * 4899);
 	mlx_loop(mlx);
+	free(curr);
+/*	while (curr != NULL)
+	{
+		tmp = curr->next;
+		free(curr->points);
+		free(curr);
+		curr = tmp;
+	}*/
 	mlx_terminate(mlx);
 	return (EXIT_SUCCESS);
 }
