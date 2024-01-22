@@ -5,7 +5,7 @@ NAME	=fdf
 
 INCLUDES_PATH=	includes
 CC=				gcc
-CFLAGS=			-Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS=			-Wall -Wextra -Werror -g3
 CPPFLAGS=		-lglfw
 
 LIBS_DIR=	./libs
