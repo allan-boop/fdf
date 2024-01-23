@@ -6,7 +6,7 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 15:54:03 by ahans             #+#    #+#             */
-/*   Updated: 2024/01/22 11:42:47 by ahans            ###   ########.fr       */
+/*   Updated: 2024/01/23 12:39:50 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,13 @@
 # include <stdio.h>
 # include "MLX42.h"
 
-typedef struct s_map_line
+# define WIDTH 1920
+# define HEIGHT 1080
+
+typedef struct s_var_stock
 {
-	int32_t				*points;
-	int32_t				length;
-	struct s_map_line	*next;
-}	t_map_line;
+	int32_t				limit_x;
+	int32_t				limit_y;
+	int32_t				**map;
+}	t_var_stock;
 #endif
