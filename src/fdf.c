@@ -14,7 +14,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-
 #include <fcntl.h>
 
 static unsigned int	get_nb_strs(char const *s, char c)
@@ -41,22 +40,59 @@ static unsigned int	get_nb_strs(char const *s, char c)
 	}
 	if (s[i - 1] != c)
 		nb_strs++;
-	return (nb_strs);
+	return (nb_strs - 1);
 }
 
-int	put_line_in_tab(char *a_line, t_var_stock *vars, int j)
+int	get_color(char *str, int rgb, int i)
+{
+	int	j;
+	int	r;
+
+	r = 0;
+	while (str[i] != 'x' && str[i] != '\0')
+		i++;
+	if (str[i] && str[i])
+		i++;
+	j = i + rgb;
+	while (i < j && str[i] != '\0')
+		i++;
+	j = i + 2;
+	while (i != j && str[i] != '\0')
+	{
+		r = r * 16;
+		if (str[i] >= '0' && str[i] <= '9')
+			r += str[i] - '0';
+		else if (str[i] >= 'A' && str[i] <= 'F')
+			r += str[i] - 'A' + 10;
+		else if (str[i] >= 'a' && str[i] <= 'f')
+			r += str[i] - 'a' + 10;
+		i++;
+	}
+	return (r);
+}
+
+int	put_line_in_tab(char *a_line, t_var_stock *vars, int *j)
 {
 	char	**points;
 	int		i;
 
 	i = 0;
 	points = ft_split(a_line, ' ');
-	while (points[i] != NULL)
+	while (points[i + 1] != NULL)
 	{
-		vars->map[j][i] = ft_atoi(points[i]);
+		vars[*j].z = ft_atoi(points[i]);
+		vars[*j].x = i;
+		vars[*j].y = *j / vars[0].line_size;
+		vars[*j].r = get_color(points[i], 0, 0);
+		vars[*j].g = get_color(points[i], 2, 0);
+		vars[*j].b = get_color(points[i], 4, 0);
+		vars[*j].a = 255;
+		vars[*j].line_size = vars[0].line_size;
 		free(points[i]);
 		i++;
+		*j += 1;
 	}
+	free(points[i]);
 	free(points);
 	return (0);
 }
@@ -82,60 +118,27 @@ int	get_nb_lines(char *filename)
 	return (i);
 }
 
-int	**put_map_in_tabs(char *filename, t_var_stock *vars)
+int	put_map_in_tabs(char *filename, t_var_stock **vars)
 {
 	int			file;
 	char		*str;
 	int			i;
 
-	vars->limit_x = get_nb_lines(filename);
-	vars->map = malloc(sizeof(int32_t *) * (vars->limit_x + 1));
-	if (!vars->map)
-		return (NULL);
 	file = open(filename, O_RDONLY);
 	if (!file)
-		return (NULL);
+		return (1);
 	str = get_next_line(file);
-	vars->limit_y = get_nb_strs(str, ' ') - 1;
+	*vars = calloc(((get_nb_strs(str, ' '))
+				* get_nb_lines(filename)), sizeof(t_var_stock));
 	i = 0;
+	(*vars[i]).line_size = get_nb_strs(str, ' ');
 	while (str != NULL)
 	{
-		vars->map[i] = malloc(sizeof(int32_t) * (vars->limit_y + 1));
-		if (!vars->map[i])
-		{
-			while (i > 0)
-			{
-				i--;
-				free(vars->map[i]);
-			}
-			free(vars->map);
-			free(str);
-			close(file);
-			return (NULL);
-		}
-		put_line_in_tab(str, vars, i);
+		put_line_in_tab(str, *vars, &i);
 		free(str);
 		str = get_next_line(file);
-		i++;
 	}
-	vars->map[i] = NULL;
 	close(file);
-	return (vars->map);
-}
-
-int32_t	clean_map(t_var_stock *vars)
-{
-	int	i;
-
-	i = 0;
-	while (vars->map[i])
-	{
-		free(vars->map[i]);
-		vars->map[i] = NULL;
-		i++;
-	}
-	free(vars->map);
-	free(vars);
 	return (0);
 }
 
@@ -147,10 +150,9 @@ int32_t	main(int ac, char **av)
 
 	if (ac != 2)
 		return (EXIT_FAILURE);
-	ac = ac;
-	vars = malloc(sizeof(t_var_stock));
-	put_map_in_tabs(av[1], vars);
-	clean_map(vars);
+	vars = NULL;
+	put_map_in_tabs(av[1], &vars);
+	free(vars);
 	mlx_set_setting(MLX_MAXIMIZED, false);
 	mlx = mlx_init(WIDTH, HEIGHT, "42Balls", true);
 	if (!mlx)

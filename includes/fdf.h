@@ -6,7 +6,7 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 15:54:03 by ahans             #+#    #+#             */
-/*   Updated: 2024/01/23 12:39:50 by ahans            ###   ########.fr       */
+/*   Updated: 2024/01/24 17:33:17 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,13 @@
 
 typedef struct s_var_stock
 {
-	int32_t				limit_x;
-	int32_t				limit_y;
-	int32_t				**map;
+	int32_t				x;
+	int32_t				y;
+	int32_t				z;
+	int32_t				r;
+	int32_t				g;
+	int32_t				b;
+	int32_t				a;
+	int32_t				line_size;
 }	t_var_stock;
 #endif
