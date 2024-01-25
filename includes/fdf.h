@@ -6,7 +6,7 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 15:54:03 by ahans             #+#    #+#             */
-/*   Updated: 2024/01/24 17:33:17 by ahans            ###   ########.fr       */
+/*   Updated: 2024/01/25 15:49:25 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,9 @@ typedef struct s_var_stock
 	int32_t				b;
 	int32_t				a;
 	int32_t				line_size;
+	int32_t				line_count;
 }	t_var_stock;
+
+void	draw_line(t_var_stock map, t_var_stock map2, void *img, int32_t ratio);
+
 #endif

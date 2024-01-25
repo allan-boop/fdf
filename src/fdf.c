@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*			*/
-/*		:::	  ::::::::   */
-/*   fdf.c			  :+:	  :+:	:+:   */
-/*			+:+ +:+		 +:+	 */
-/*   By: ahans <ahans@student.42.fr>		+#+  +:+	   +#+		*/
-/*		+#+#+#+#+#+   +#+		   */
-/*   Created: 2024/01/18 15:53:38 by ahans			 #+#	#+#			 */
-/*   Updated: 2024/01/23 11:34:32 by ahans			###   ########.fr	   */
-/*			*/
+/*	*/
+/*	:::	  ::::::::   */
+/*   fdf.c	  :+:	  :+:	:+:   */
+/*	+:+ +:+	 +:+	 */
+/*   By: ahans <ahans@student.42.fr>	+#+  +:+	   +#+	*/
+/*	+#+#+#+#+#+   +#+	   */
+/*   Created: 2024/01/24 17:46:59 by ahans	 #+#	#+#	 */
+/*   Updated: 2024/01/25 12:40:22 by ahans	###   ########.fr	   */
+/*	*/
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
@@ -88,6 +88,7 @@ int	put_line_in_tab(char *a_line, t_var_stock *vars, int *j)
 		vars[*j].b = get_color(points[i], 4, 0);
 		vars[*j].a = 255;
 		vars[*j].line_size = vars[0].line_size;
+		vars[*j].line_count = vars[0].line_count;
 		free(points[i]);
 		i++;
 		*j += 1;
@@ -132,6 +133,7 @@ int	put_map_in_tabs(char *filename, t_var_stock **vars)
 				* get_nb_lines(filename)), sizeof(t_var_stock));
 	i = 0;
 	(*vars[i]).line_size = get_nb_strs(str, ' ');
+	(*vars[i]).line_count = get_nb_lines(filename);
 	while (str != NULL)
 	{
 		put_line_in_tab(str, *vars, &i);
@@ -140,6 +142,19 @@ int	put_map_in_tabs(char *filename, t_var_stock **vars)
 	}
 	close(file);
 	return (0);
+}
+
+void draw_map(t_var_stock *map, mlx_image_t *img)
+{
+	int	i;
+
+	i = 0;
+	while (i < (map[0].line_size * map[0].line_count) - 1)
+	{
+			draw_line(map[i], map[i + 1], img, 20);
+		i++;
+	}
+	draw_line(map[0], map[1], img, 20);
 }
 
 int32_t	main(int ac, char **av)
@@ -152,9 +167,8 @@ int32_t	main(int ac, char **av)
 		return (EXIT_FAILURE);
 	vars = NULL;
 	put_map_in_tabs(av[1], &vars);
-	free(vars);
 	mlx_set_setting(MLX_MAXIMIZED, false);
-	mlx = mlx_init(WIDTH, HEIGHT, "42Balls", true);
+	mlx = mlx_init(WIDTH, HEIGHT, "fdf", true);
 	if (!mlx)
 		return (EXIT_FAILURE);
 	img = mlx_new_image(mlx, WIDTH, HEIGHT);
@@ -164,12 +178,11 @@ int32_t	main(int ac, char **av)
 	{
 		for (int i = 0; i < 1080 - 1 ; i++)
 		{
-			if (i % 10 == 0)
-				mlx_put_pixel(img, j, i, 0x00CC0000);
-			else
-				mlx_put_pixel(img, j, i, 0x85A1DDAA);
+			mlx_put_pixel(img, j, i, 0x000000FF);
 		}
 	}
+	draw_map(vars, img);
+	free(vars);
 	mlx_loop(mlx);
 	mlx_terminate(mlx);
 	return (EXIT_SUCCESS);

@@ -15,7 +15,8 @@ all: $(NAME)
 ########################################
 ## SOURCES
 ########################################
-SRC_FILES = fdf.c
+SRC_FILES = fdf.c \
+			vector.c
 
 SRC_FILES := $(addprefix src/, $(SRC_FILES))
 OBJ_FILES = $(SRC_FILES:.c=.o)
