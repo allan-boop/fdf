@@ -144,17 +144,19 @@ int	put_map_in_tabs(char *filename, t_var_stock **vars)
 	return (0);
 }
 
-void draw_map(t_var_stock *map, mlx_image_t *img)
+void	draw_map(t_var_stock *map, mlx_image_t *img)
 {
 	int	i;
 
 	i = 0;
-	while (i < (map[0].line_size * map[0].line_count) - 1)
+	while (i < (map[0].line_size * map[0].line_count - 1))
 	{
-			draw_line(map[i], map[i + 1], img, 20);
+		ft_printf("%d\n", i);
+		draw_line(map[i], map[i + 1], img, 50);
+		if (i < (map[0].line_size * map[0].line_count - map[0].line_size))
+			draw_line(map[i], map[i + map[0].line_size], img, 80);
 		i++;
 	}
-	draw_line(map[0], map[1], img, 20);
 }
 
 int32_t	main(int ac, char **av)
