@@ -33,7 +33,7 @@ DO_LIBS:
 
 $(NAME): $(OBJ_FILES) | DO_LIBS
 	@echo LINKING
-	$(CC) $^ -L$(LIBS_DIR) -lft -lmlx42 $(CFLAGS) $(CPPFLAGS) -o $@
+	$(CC) $^ -L$(LIBS_DIR) -lft -lmlx42 $(CFLAGS) $(CPPFLAGS) -o $@ -lm
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
