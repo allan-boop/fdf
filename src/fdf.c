@@ -144,14 +144,25 @@ int	put_map_in_tabs(char *filename, t_var_stock **vars)
 	return (0);
 }
 
-void project_3d(t_var_stock *point, int32_t ratio)
+void calcul_center (t_var_stock *array, int ratio)
 {
-	int32_t x = point->x;
-	int32_t y = point->y;
-	int32_t z = point->z;
+	int	map_height;
+	int	map_width;
+	int	start_x;
+	int	start_y;
+	int	i;
 
-	point->x = (x - y) * cos(ratio);
-	point->y = -z + (x + y) * sin(ratio);
+	map_height = (array[0].line_count / array[0].line_size) * ratio;
+	map_width = array[0].line_size * ratio;
+	start_x = (WIDTH - map_width) / 2;
+	start_y = (HEIGHT - map_height) / 2;
+	i = 0;
+	while (array[0].line_count * array[0].line_size > i)
+	{
+		array[i].start_x = start_x;
+		array[i].start_y = start_y;
+		i++;
+	}
 }
 
 void	draw_map(t_var_stock *map, mlx_image_t *img, int32_t ratio)
@@ -159,15 +170,12 @@ void	draw_map(t_var_stock *map, mlx_image_t *img, int32_t ratio)
 	int	i;
 
 	i = 0;
+	calcul_center(map, ratio);
 	while (i < (map[0].line_size * map[0].line_count - 1))
 	{
-		project_3d(&map[i], ratio);
 		draw_line(map[i], map[i + 1], img, ratio);
 		if (i < (map[0].line_size * map[0].line_count - map[0].line_size))
-		{
-			project_3d(&map[i + map[0].line_size], ratio);
 			draw_col(map[i], map[i + map[0].line_size], img, ratio);
-		}
 		i++;
 	}
 }
@@ -185,14 +193,15 @@ int32_t	main(int ac, char **av)
 	put_map_in_tabs(av[1], &vars);
 	mlx_set_setting(MLX_MAXIMIZED, false);
 	mlx = mlx_init(WIDTH, HEIGHT, "fdf", true);
-	ratio = (HEIGHT / vars[0].line_count);
-	if (ratio > (WIDTH / vars[0].line_size))
-		ratio = (WIDTH / vars[0].line_size);
+	ratio = 30;
 	if (!mlx)
 		return (EXIT_FAILURE);
 	img = mlx_new_image(mlx, WIDTH, HEIGHT);
 	if (!img || (mlx_image_to_window(mlx, img, 0, 0) < 0))
 		return (EXIT_FAILURE);
+	rotation_x(vars, vars[0].line_size * vars[0].line_count, 0);
+	rotation_y(vars, vars[0].line_size * vars[0].line_count, 0);
+	rotation_z(vars, vars[0].line_size * vars[0].line_count, 45);
 	draw_map(vars, img, ratio);
 	free(vars);
 	mlx_loop(mlx);
