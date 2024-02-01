@@ -80,9 +80,9 @@ int	put_line_in_tab(char *a_line, t_var_stock *vars, int *j)
 	points = ft_split(a_line, ' ');
 	while (points[i + 1] != NULL)
 	{
-		vars[*j].z = ft_atoi(points[i]);
-		vars[*j].x = i;
-		vars[*j].y = *j / vars[0].line_size;
+		vars[*j].z = (ft_atoi(points[i]) * 20);
+		vars[*j].x = (i * 20) + 300;
+		vars[*j].y = ((*j / vars[0].line_size) * 20) + 300;
 		vars[*j].r = get_color(points[i], 0, 0);
 		vars[*j].g = get_color(points[i], 2, 0);
 		vars[*j].b = get_color(points[i], 4, 0);
@@ -144,7 +144,7 @@ int	put_map_in_tabs(char *filename, t_var_stock **vars)
 	return (0);
 }
 
-void calcul_center (t_var_stock *array, int ratio)
+void calcul_center (t_var_stock *array)
 {
 	int	map_height;
 	int	map_width;
@@ -152,8 +152,8 @@ void calcul_center (t_var_stock *array, int ratio)
 	int	start_y;
 	int	i;
 
-	map_height = (array[0].line_count / array[0].line_size) * ratio;
-	map_width = array[0].line_size * ratio;
+	map_height = (array[0].line_count / array[0].line_size);
+	map_width = array[0].line_size;
 	start_x = (WIDTH - map_width) / 2;
 	start_y = (HEIGHT - map_height) / 2;
 	i = 0;
@@ -165,17 +165,18 @@ void calcul_center (t_var_stock *array, int ratio)
 	}
 }
 
-void	draw_map(t_var_stock *map, mlx_image_t *img, int32_t ratio)
+void	draw_map(t_var_stock *map, mlx_image_t *img)
 {
 	int	i;
 
 	i = 0;
-	calcul_center(map, ratio);
+	calcul_center(map);
 	while (i < (map[0].line_size * map[0].line_count - 1))
 	{
-		draw_line(map[i], map[i + 1], img, ratio);
+		if ((i + 1) % map[0].line_size != 0)
+			draw(map[i], map[i + 1], img);
 		if (i < (map[0].line_size * map[0].line_count - map[0].line_size))
-			draw_col(map[i], map[i + map[0].line_size], img, ratio);
+			draw(map[i], map[i + map[0].line_size], img);
 		i++;
 	}
 }
@@ -185,7 +186,7 @@ int32_t	main(int ac, char **av)
 	t_var_stock	*vars;
 	mlx_image_t	*img;
 	mlx_t		*mlx;
-	int32_t		ratio;
+//	int32_t		ratio;
 
 	if (ac != 2)
 		return (EXIT_FAILURE);
@@ -193,16 +194,16 @@ int32_t	main(int ac, char **av)
 	put_map_in_tabs(av[1], &vars);
 	mlx_set_setting(MLX_MAXIMIZED, false);
 	mlx = mlx_init(WIDTH, HEIGHT, "fdf", true);
-	ratio = 30;
+//	ratio = 30;
 	if (!mlx)
 		return (EXIT_FAILURE);
 	img = mlx_new_image(mlx, WIDTH, HEIGHT);
 	if (!img || (mlx_image_to_window(mlx, img, 0, 0) < 0))
 		return (EXIT_FAILURE);
-	rotation_x(vars, vars[0].line_size * vars[0].line_count, 0);
+	rotation_x(vars, vars[0].line_size * vars[0].line_count, 45);
 	rotation_y(vars, vars[0].line_size * vars[0].line_count, 0);
-	rotation_z(vars, vars[0].line_size * vars[0].line_count, 45);
-	draw_map(vars, img, ratio);
+	rotation_z(vars, vars[0].line_size * vars[0].line_count, 0);
+	draw_map(vars, img);
 	free(vars);
 	mlx_loop(mlx);
 	mlx_terminate(mlx);

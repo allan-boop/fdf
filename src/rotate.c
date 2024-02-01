@@ -6,7 +6,7 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:00:52 by ahans             #+#    #+#             */
-/*   Updated: 2024/01/31 15:56:35 by ahans            ###   ########.fr       */
+/*   Updated: 2024/01/31 17:45:20 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 void	rotation_x(t_var_stock *coord, int size, int angle)
 {
 	int		i;
-	float	rad;
-	float	y;
+	double	rad;
+	double	y;
+	double	z;
 
 	if (angle != 0)
 	{
@@ -25,8 +26,9 @@ void	rotation_x(t_var_stock *coord, int size, int angle)
 		while (i < size)
 		{
 			y = coord[i].y;
-			coord[i].y = (cos(rad) * y) - (sin(rad) * coord[i].z);
-			coord[i].z = (sin(rad) * y) + (cos(rad) * coord[i].z);
+			z = coord[i].z;
+			coord[i].y = y * cos(rad) - z * sin(rad);
+			coord[i].z = y * sin(rad) + z * cos(rad);
 			i++;
 		}
 	}
@@ -35,9 +37,9 @@ void	rotation_x(t_var_stock *coord, int size, int angle)
 void	rotation_y(t_var_stock *coord, int size, int angle)
 {
 	int		i;
-	float	rad;
-	float	x;
-	float	z;
+	double	rad;
+	double	x;
+	double	z;
 
 	if (angle != 0)
 	{
@@ -47,7 +49,6 @@ void	rotation_y(t_var_stock *coord, int size, int angle)
 		{
 			x = coord[i].x;
 			z = coord[i].z;
-			ft_printf("x: %d\n", x);
 			coord[i].x = x * cos(rad) + z * sin(rad);
 			coord[i].z = -x * sin(rad) + z * cos(rad);
 			i++;
@@ -58,8 +59,9 @@ void	rotation_y(t_var_stock *coord, int size, int angle)
 void	rotation_z(t_var_stock *coord, int size, int angle)
 {
 	int		i;
-	float	rad;
-	float	x;
+	double	rad;
+	double	x;
+	double	y;
 
 	if (angle != 0)
 	{
@@ -68,8 +70,9 @@ void	rotation_z(t_var_stock *coord, int size, int angle)
 		while (i < size)
 		{
 			x = coord[i].x;
-			coord[i].x = (cosf(rad) * x) - (sinf(rad) * coord[i].y);
-			coord[i].y = (sinf(rad) * x) + (cosf(rad) * coord[i].y);
+			y = coord[i].y;
+			coord[i].x = x * cos(rad) - y * sin(rad);
+			coord[i].y = x * sin(rad) + y * cos(rad);
 			i++;
 		}
 	}
