@@ -6,7 +6,7 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 12:31:39 by ahans             #+#    #+#             */
-/*   Updated: 2024/02/01 13:55:52 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/01 18:24:00 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	calcul_center(t_var_stock *array)
 	int	start_y;
 	int	i;
 
-	map_height = (array[0].line_count / array[0].line_size);
+	map_height = array[0].line_count;
 	map_width = array[0].line_size;
 	start_x = (WIDTH - map_width) / 2;
 	start_y = (HEIGHT - map_height) / 2;

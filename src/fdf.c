@@ -6,7 +6,7 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 13:56:47 by ahans             #+#    #+#             */
-/*   Updated: 2024/02/01 13:59:51 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/01 17:48:26 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	draw_map(t_var_stock *map, mlx_image_t *img)
 	int	i;
 
 	i = 0;
-	calcul_center(map);
 	while (i < (map[0].line_size * map[0].line_count - 1))
 	{
 		if ((i + 1) % map[0].line_size != 0)
