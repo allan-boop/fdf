@@ -17,7 +17,9 @@ all: $(NAME)
 ########################################
 SRC_FILES = fdf.c \
 			vector.c \
-			rotate.c
+			rotate.c \
+			utils.c \
+			parser.c
 
 SRC_FILES := $(addprefix src/, $(SRC_FILES))
 OBJ_FILES = $(SRC_FILES:.c=.o)

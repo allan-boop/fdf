@@ -6,7 +6,7 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 15:54:03 by ahans             #+#    #+#             */
-/*   Updated: 2024/01/31 19:02:04 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/01 13:59:32 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,23 @@ typedef struct s_var_stock
 	int32_t				line_count;
 }	t_var_stock;
 
-void	draw_line(t_var_stock map, t_var_stock map2, void *img, int32_t ratio);
-void	draw_col(t_var_stock map, t_var_stock map2, void *img, int32_t ratio);
+typedef struct s_bres
+{
+	int32_t				dx;
+	int32_t				dy;
+	int32_t				inc_x;
+	int32_t				inc_y;
+	mlx_image_t			*img;
+}	t_bres;
+
 void	rotation_x(t_var_stock *coord, int size, int angle);
 void	rotation_y(t_var_stock *coord, int size, int angle);
 void	rotation_z(t_var_stock *coord, int size, int angle);
 void	draw(t_var_stock current, t_var_stock next, void *image);
+void	draw_pixel(void *mlx_ptr, int32_t x, int32_t y, int32_t color);
+int		max(int a, int b);
+void	calcul_center(t_var_stock *array);
+int		put_map_in_tabs(char *filename, t_var_stock **vars);
+
 
 #endif

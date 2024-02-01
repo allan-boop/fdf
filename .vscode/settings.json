@@ -1,0 +1,12 @@
+{
+	"files.associations": {
+		"random": "c",
+		"limits": "c",
+		"algorithm": "c",
+		"bit": "c",
+		"*.tcc": "c",
+		"functional": "c",
+		"string_view": "c",
+		"numeric": "c"
+	}
+}
