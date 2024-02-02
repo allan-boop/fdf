@@ -6,7 +6,7 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 15:54:03 by ahans             #+#    #+#             */
-/*   Updated: 2024/02/01 13:59:32 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/02 15:14:01 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,12 @@ typedef struct s_bres
 	mlx_image_t			*img;
 }	t_bres;
 
+typedef struct s_map_size
+{
+	int32_t				x;
+	int32_t				y;
+}	t_m_s;
+
 void	rotation_x(t_var_stock *coord, int size, int angle);
 void	rotation_y(t_var_stock *coord, int size, int angle);
 void	rotation_z(t_var_stock *coord, int size, int angle);
@@ -55,6 +61,6 @@ void	draw_pixel(void *mlx_ptr, int32_t x, int32_t y, int32_t color);
 int		max(int a, int b);
 void	calcul_center(t_var_stock *array);
 int		put_map_in_tabs(char *filename, t_var_stock **vars);
-
+void	recalcul_center(t_var_stock *array);
 
 #endif

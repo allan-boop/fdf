@@ -6,7 +6,7 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 13:56:42 by ahans             #+#    #+#             */
-/*   Updated: 2024/02/01 18:24:18 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/02 15:50:40 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,12 @@ static int	put_line_in_tab(char *a_line, t_var_stock *vars, int *j)
 
 	i = 0;
 	points = ft_split(a_line, ' ');
-	calcul_center(vars);
+	//calcul_center(vars);
 	while (points[i] != NULL)
 	{
 		vars[*j].z = (ft_atoi(points[i]) * 1);
-		vars[*j].x = (i * 20) + vars[0].start_x - (vars[0].line_size * 20 / 2);
-		vars[*j].y = ((*j / vars[0].line_size) * 20) \
-					+ vars[0].start_y - (vars[0].line_count * 20 / 4);
+		vars[*j].x = (i * 5);
+		vars[*j].y = ((*j / vars[0].line_size) * 5);
 		vars[*j].r = get_color(points[i], 0, 0);
 		vars[*j].g = get_color(points[i], 2, 0);
 		vars[*j].b = get_color(points[i], 4, 0);

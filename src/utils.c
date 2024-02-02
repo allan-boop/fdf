@@ -6,7 +6,7 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 12:31:39 by ahans             #+#    #+#             */
-/*   Updated: 2024/02/01 18:24:00 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/02 18:23:39 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,23 +27,49 @@ void	draw_pixel(void *mlx_ptr, int32_t x, int32_t y, int32_t color)
 	mlx_put_pixel(mlx_ptr, x, y, color);
 }
 
-void	calcul_center(t_var_stock *array)
+static double	median_x(t_var_stock *array, int size)
 {
-	int	map_height;
-	int	map_width;
-	int	start_x;
-	int	start_y;
-	int	i;
+	double	median;
+	int		i;
 
-	map_height = array[0].line_count;
-	map_width = array[0].line_size;
-	start_x = (WIDTH - map_width) / 2;
-	start_y = (HEIGHT - map_height) / 2;
 	i = 0;
+	median = 0;
+	while (i < size)
+	{
+		median += array[i].x;
+		i++;
+	}
+	return (median / size);
+}
+
+static double	median_y(t_var_stock *array, int size)
+{
+	double	median;
+	int		i;
+
+	i = 0;
+	median = 0;
+	while (i < size)
+	{
+		median += array[i].y;
+		i++;
+	}
+	return (median / size);
+}
+
+void	recalcul_center(t_var_stock *array)
+{
+	int		i;
+	double	med_x;
+	double	med_y;
+
+	i = 0;
+	med_x = median_x(array, array[0].line_count * array[0].line_size);
+	med_y = median_y(array, array[0].line_count * array[0].line_size);
 	while (array[0].line_count * array[0].line_size > i)
 	{
-		array[i].start_x = start_x;
-		array[i].start_y = start_y;
+		array[i].x = (array[i].x - med_x) + (WIDTH / 2);
+		array[i].y = (array[i].y - med_y) + (HEIGHT / 2);
 		i++;
 	}
 }
