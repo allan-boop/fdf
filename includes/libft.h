@@ -6,7 +6,7 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 17:09:43 by ahans             #+#    #+#             */
-/*   Updated: 2024/01/19 15:54:25 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/03 18:59:11 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,7 @@ t_flags	arg_c(va_list arg, t_flags *ret);
 t_flags	arg_x(int num, t_flags *ret, char min_maj);
 t_flags	arg_u(unsigned int n, t_flags *ret);
 char	*get_next_line(int fd);
+int		ft_atoi_base(char *nb);
+char	*ft_strlower(char *str);
 
 #endif

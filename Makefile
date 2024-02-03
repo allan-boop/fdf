@@ -19,7 +19,9 @@ SRC_FILES = fdf.c \
 			vector.c \
 			rotate.c \
 			utils.c \
-			parser.c
+			parser.c \
+			color.c \
+			ft_hook.c
 
 SRC_FILES := $(addprefix src/, $(SRC_FILES))
 OBJ_FILES = $(SRC_FILES:.c=.o)

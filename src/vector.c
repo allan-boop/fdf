@@ -6,7 +6,7 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:07:07 by ahans             #+#    #+#             */
-/*   Updated: 2024/02/01 13:32:04 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/03 18:41:46 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	bres_y_0(t_var_stock current, t_var_stock next, t_bres bres)
 {
 	while ((int)current.x != (int)next.x + bres.inc_x)
 	{
-		draw_pixel(bres.img, current.x, current.y, 0xFF0000FF);
+		draw_pixel(bres.img, current.x, current.y, ft_atoi_base(current.color));
 		current.x += bres.inc_x;
 	}
 }
@@ -25,7 +25,7 @@ static void	bres_x_0(t_var_stock current, t_var_stock next, t_bres bres)
 {
 	while ((int)current.y != (int)next.y + bres.inc_y)
 	{
-		draw_pixel(bres.img, current.x, current.y, 0xFF0000FF);
+		draw_pixel(bres.img, current.x, current.y, ft_atoi_base(current.color));
 		current.y += bres.inc_y;
 	}
 }
@@ -41,7 +41,7 @@ static void	bres_dx_bigger(t_var_stock current, t_var_stock next, t_bres bres)
 	inc_e = error << 1;
 	while ((int)current.x != (int)next.x + bres.inc_x)
 	{
-		draw_pixel(bres.img, current.x, current.y, 0xFF0000FF);
+		draw_pixel(bres.img, current.x, current.y, ft_atoi_base(current.color));
 		error += slope;
 		if (error >= 0)
 		{
@@ -63,7 +63,7 @@ static void	bres_standard(t_var_stock current, t_var_stock next, t_bres bres)
 	inc_e = error << 1;
 	while ((int)current.y != (int)next.y + bres.inc_y)
 	{
-		draw_pixel(bres.img, current.x, current.y, 0xFF0000FF);
+		draw_pixel(bres.img, current.x, current.y, ft_atoi_base(current.color));
 		error += slope;
 		if (error >= 0)
 		{

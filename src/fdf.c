@@ -6,7 +6,7 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 13:56:47 by ahans             #+#    #+#             */
-/*   Updated: 2024/02/02 18:24:06 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/03 23:05:06 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,30 @@ void	draw_map(t_var_stock *map, mlx_image_t *img)
 	}
 }
 
+static void	free_everythings(t_var_stock *array)
+{
+	int	i;
+	int	len;
+
+	i = 0;
+	len = array[0].line_size * array[0].line_count;
+	while (i < len)
+	{
+		free(array[i].color);
+		i++;
+	}
+	free(array);
+}
+
 int32_t	main(int ac, char **av)
 {
 	t_var_stock	*vars;
 	mlx_image_t	*img;
 	mlx_t		*mlx;
+	t_hook_pos	*hook;
 
+	mlx = NULL;
+	hook = malloc(sizeof(t_hook_pos));
 	if (ac != 2)
 		return (EXIT_FAILURE);
 	vars = NULL;
@@ -48,13 +66,17 @@ int32_t	main(int ac, char **av)
 	img = mlx_new_image(mlx, WIDTH, HEIGHT);
 	if (!img || (mlx_image_to_window(mlx, img, 0, 0) < 0))
 		return (EXIT_FAILURE);
-	rotation_x(vars, vars[0].line_size * vars[0].line_count, 800);
-	rotation_y(vars, vars[0].line_size * vars[0].line_count, 250);
-	rotation_z(vars, vars[0].line_size * vars[0].line_count, 2000);
+	rotation_x(vars, vars[0].line_size * vars[0].line_count, 0);
+	rotation_y(vars, vars[0].line_size * vars[0].line_count, 0);
+	rotation_z(vars, vars[0].line_size * vars[0].line_count, 0);
 	recalcul_center(vars);
 	draw_map(vars, img);
-	free(vars);
+	hook->mlx = mlx;
+	hook->img = img;
+	hook->vars = vars;
+	mlx_loop_hook(mlx, &ft_hook, hook);
 	mlx_loop(mlx);
+	free_everythings(vars);
 	mlx_terminate(mlx);
 	return (EXIT_SUCCESS);
 }

@@ -65,7 +65,9 @@ SRC_FILES =	\
 	ft_lstadd_front_bonus.c \
 	ft_lstnew_bonus.c \
 	ft_atol.c \
-	get_next_line_bonus.c
+	get_next_line_bonus.c \
+	ft_atoi_base.c \
+	ft_strlower.c \
 
 OBJ_FILES =	$(SRC_FILES:.c=.o)
 

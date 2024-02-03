@@ -6,7 +6,7 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 13:56:42 by ahans             #+#    #+#             */
-/*   Updated: 2024/02/02 15:50:40 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/03 23:16:03 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,34 +39,6 @@ static unsigned int	get_nb_strs(char const *s, char c)
 	return (nb_strs);
 }
 
-static int	get_color(char *str, int rgb, int i)
-{
-	int	j;
-	int	r;
-
-	r = 0;
-	while (str[i] != 'x' && str[i] != '\0')
-		i++;
-	if (str[i] && str[i])
-		i++;
-	j = i + rgb;
-	while (i < j && str[i] != '\0')
-		i++;
-	j = i + 2;
-	while (i != j && str[i] != '\0')
-	{
-		r = r * 16;
-		if (str[i] >= '0' && str[i] <= '9')
-			r += str[i] - '0';
-		else if (str[i] >= 'A' && str[i] <= 'F')
-			r += str[i] - 'A' + 10;
-		else if (str[i] >= 'a' && str[i] <= 'f')
-			r += str[i] - 'a' + 10;
-		i++;
-	}
-	return (r);
-}
-
 static int	put_line_in_tab(char *a_line, t_var_stock *vars, int *j)
 {
 	char	**points;
@@ -74,16 +46,19 @@ static int	put_line_in_tab(char *a_line, t_var_stock *vars, int *j)
 
 	i = 0;
 	points = ft_split(a_line, ' ');
-	//calcul_center(vars);
 	while (points[i] != NULL)
 	{
 		vars[*j].z = (ft_atoi(points[i]) * 1);
-		vars[*j].x = (i * 5);
-		vars[*j].y = ((*j / vars[0].line_size) * 5);
-		vars[*j].r = get_color(points[i], 0, 0);
-		vars[*j].g = get_color(points[i], 2, 0);
-		vars[*j].b = get_color(points[i], 4, 0);
-		vars[*j].a = 255;
+		vars[*j].x = (i * 50);
+		vars[*j].y = ((*j / vars[0].line_size) * 50);
+		vars[*j].color = ft_strlower(get_color(points[i]));
+		if (vars[*j].color == NULL)
+		{
+			if (vars[*j].z > 0)
+				vars[*j].color = ft_strdup("ff00ffff");
+			else
+				vars[*j].color = ft_strdup("ff3070ff");
+		}
 		vars[*j].line_size = vars[0].line_size;
 		vars[*j].line_count = vars[0].line_count;
 		free(points[i]);
