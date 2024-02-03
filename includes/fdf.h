@@ -6,7 +6,7 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 15:54:03 by ahans             #+#    #+#             */
-/*   Updated: 2024/02/03 22:57:16 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/03 23:34:41 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,6 @@ int		put_map_in_tabs(char *filename, t_var_stock **vars);
 void	recalcul_center(t_var_stock *array);
 char	*get_color(char *str);
 void	ft_hook(void *hook);
-void	draw_map(t_var_stock *map, mlx_image_t *img);
+void	draw_map(t_var_stock *map, mlx_image_t *img, float ratio);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 13:56:47 by ahans             #+#    #+#             */
-/*   Updated: 2024/02/03 23:05:06 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/03 23:58:08 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,29 @@
 #include <stdbool.h>
 #include <fcntl.h>
 
-void	draw_map(t_var_stock *map, mlx_image_t *img)
+void	draw_map(t_var_stock *map, mlx_image_t *img, float ratio)
 {
 	int	i;
 
 	i = 0;
+	while (i < (map[0].line_size * map[0].line_count))
+	{
+		map[i].x *= ratio;
+		map[i].y *= ratio;
+		i++;
+	}
+	recalcul_center(map);
+	i = 0;
 	while (i < (map[0].line_size * map[0].line_count - 1))
 	{
 		if ((i + 1) % map[0].line_size != 0)
+		{
 			draw(map[i], map[i + 1], img);
+		}
 		if (i < (map[0].line_size * map[0].line_count - map[0].line_size))
+		{
 			draw(map[i], map[i + map[0].line_size], img);
+		}
 		i++;
 	}
 }
@@ -66,11 +78,6 @@ int32_t	main(int ac, char **av)
 	img = mlx_new_image(mlx, WIDTH, HEIGHT);
 	if (!img || (mlx_image_to_window(mlx, img, 0, 0) < 0))
 		return (EXIT_FAILURE);
-	rotation_x(vars, vars[0].line_size * vars[0].line_count, 0);
-	rotation_y(vars, vars[0].line_size * vars[0].line_count, 0);
-	rotation_z(vars, vars[0].line_size * vars[0].line_count, 0);
-	recalcul_center(vars);
-	draw_map(vars, img);
 	hook->mlx = mlx;
 	hook->img = img;
 	hook->vars = vars;

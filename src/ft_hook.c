@@ -6,7 +6,7 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 19:29:23 by ahans             #+#    #+#             */
-/*   Updated: 2024/02/03 23:26:04 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/03 23:57:36 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@ void	rotation_handler(t_hook_pos *data)
 			* (&data->vars[0])->line_size, data->angle_y);
 	rotation_z(data->vars, (&data->vars[0])->line_count \
 			* (&data->vars[0])->line_size, data->angle_z);
-	recalcul_center(data->vars);
-	draw_map(data->vars, data->img);
+	draw_map(data->vars, data->img, data->zoom);
 }
 
 void	inc_angle(t_hook_pos *data, int flag)
@@ -59,15 +58,19 @@ void	inc_angle(t_hook_pos *data, int flag)
 		data->angle_z += 6;
 	if (flag == 6)
 		data->angle_z -= 6;
+	if (flag == 7)
+		data->zoom += 0.2;
+	if (flag == 8 && data->zoom > 0.1)
+		data->zoom -= 0.2;
 	rotation_handler(data);
 }
 
 void	ft_rotate(t_hook_pos *hook, mlx_t *mlx)
 {
-	hook = hook;
 	hook->angle_x = 0;
 	hook->angle_y = 0;
 	hook->angle_z = 0;
+	hook->zoom = 1;
 	if (mlx_is_key_down(hook->mlx, MLX_KEY_D))
 		inc_angle(hook, 1);
 	else if (mlx_is_key_down(hook->mlx, MLX_KEY_A))
@@ -80,6 +83,10 @@ void	ft_rotate(t_hook_pos *hook, mlx_t *mlx)
 		inc_angle(hook, 5);
 	else if (mlx_is_key_down(hook->mlx, MLX_KEY_E))
 		inc_angle(hook, 6);
+	else if (mlx_is_key_down(mlx, MLX_KEY_1))
+		inc_angle(hook, 7);
+	else if (mlx_is_key_down(mlx, MLX_KEY_2))
+		inc_angle(hook, 8);
 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(mlx);
 	rotation_handler(hook);
