@@ -8,6 +8,8 @@
 		"functional": "c",
 		"string_view": "c",
 		"numeric": "c",
-		"array": "c"
+		"array": "c",
+		"fcntl.h": "c",
+		"fdf.h": "c"
 	}
 }

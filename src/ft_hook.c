@@ -6,13 +6,13 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 19:29:23 by ahans             #+#    #+#             */
-/*   Updated: 2024/02/03 23:57:36 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/05 11:04:38 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-void	clear(mlx_image_t *img)
+static void	clear(mlx_image_t *img)
 {
 	int	x;
 	int	y;
@@ -32,7 +32,7 @@ void	clear(mlx_image_t *img)
 	}
 }
 
-void	rotation_handler(t_hook_pos *data)
+static void	rotation_handler(t_hook_pos *data)
 {
 	clear(data->img);
 	rotation_x(data->vars, (&data->vars[0])->line_count \
@@ -44,7 +44,7 @@ void	rotation_handler(t_hook_pos *data)
 	draw_map(data->vars, data->img, data->zoom);
 }
 
-void	inc_angle(t_hook_pos *data, int flag)
+static void	inc_angle(t_hook_pos *data, int flag)
 {
 	if (flag == 1)
 		data->angle_x += 6;
@@ -65,7 +65,7 @@ void	inc_angle(t_hook_pos *data, int flag)
 	rotation_handler(data);
 }
 
-void	ft_rotate(t_hook_pos *hook, mlx_t *mlx)
+static void	ft_rotate(t_hook_pos *hook, mlx_t *mlx)
 {
 	hook->angle_x = 0;
 	hook->angle_y = 0;

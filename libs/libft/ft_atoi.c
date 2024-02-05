@@ -6,7 +6,7 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 14:05:20 by ahans             #+#    #+#             */
-/*   Updated: 2024/01/21 16:46:47 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/05 14:49:45 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	ft_atoi(const char *nptr)
 
 	result = 0;
 	sign = 1;
+	if (!nptr)
+		return (0);
 	while (*nptr == ' ' || (*nptr >= 9 && *nptr <= 13))
 		nptr++;
 	if (*nptr == '-')

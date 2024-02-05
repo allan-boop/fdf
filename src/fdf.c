@@ -6,15 +6,11 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 13:56:47 by ahans             #+#    #+#             */
-/*   Updated: 2024/02/03 23:58:08 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/05 18:00:33 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <fcntl.h>
 
 void	draw_map(t_var_stock *map, mlx_image_t *img, float ratio)
 {
@@ -43,7 +39,7 @@ void	draw_map(t_var_stock *map, mlx_image_t *img, float ratio)
 	}
 }
 
-static void	free_everythings(t_var_stock *array)
+static void	free_everythings(t_var_stock *array, t_hook_pos *hook)
 {
 	int	i;
 	int	len;
@@ -55,6 +51,7 @@ static void	free_everythings(t_var_stock *array)
 		free(array[i].color);
 		i++;
 	}
+	free(hook);
 	free(array);
 }
 
@@ -83,7 +80,7 @@ int32_t	main(int ac, char **av)
 	hook->vars = vars;
 	mlx_loop_hook(mlx, &ft_hook, hook);
 	mlx_loop(mlx);
-	free_everythings(vars);
+	free_everythings(vars, hook);
 	mlx_terminate(mlx);
 	return (EXIT_SUCCESS);
 }

@@ -6,19 +6,11 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 12:31:39 by ahans             #+#    #+#             */
-/*   Updated: 2024/02/02 18:23:39 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/05 10:52:33 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
-
-int	max(int a, int b)
-{
-	if (a > b)
-		return (a);
-	else
-		return (b);
-}
 
 void	draw_pixel(void *mlx_ptr, int32_t x, int32_t y, int32_t color)
 {
