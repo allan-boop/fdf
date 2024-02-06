@@ -6,7 +6,7 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:07:07 by ahans             #+#    #+#             */
-/*   Updated: 2024/02/03 18:41:46 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/06 20:12:52 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ static void	bres_standard(t_var_stock current, t_var_stock next, t_bres bres)
 		current.y += bres.inc_y;
 	}
 }
-
 
 void	draw(t_var_stock current, t_var_stock next, void *image)
 {

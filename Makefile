@@ -5,7 +5,7 @@ NAME	=fdf
 
 INCLUDES_PATH=	includes
 CC=				gcc
-CFLAGS=			-Wall -Wextra -Werror -g3
+CFLAGS=			-Wall -Wextra -Werror
 CPPFLAGS=		-lglfw
 
 LIBS_DIR=	./libs
@@ -22,7 +22,9 @@ SRC_FILES = fdf.c \
 			parser.c \
 			color.c \
 			ft_hook.c \
-			checker.c
+			checker.c \
+			checker2.c \
+			parser_utils.c
 
 SRC_FILES := $(addprefix src/, $(SRC_FILES))
 OBJ_FILES = $(SRC_FILES:.c=.o)

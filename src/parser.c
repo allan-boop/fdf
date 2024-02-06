@@ -12,7 +12,17 @@
 
 #include "../includes/fdf.h"
 
-static unsigned int	get_nb_strs(char const *s, char c)
+static void	ft_free_points(char **points, t_var_stock *array)
+{
+	while (points[array[0].i])
+	{
+		free(points[array[0].i]);
+		(array[0].i)++;
+	}
+	free(points);
+}
+
+unsigned int	get_nb_strs(char const *s, char c)
 {
 	unsigned int	i;
 	unsigned int	nb_strs;
@@ -39,158 +49,86 @@ static unsigned int	get_nb_strs(char const *s, char c)
 	return (nb_strs);
 }
 
-static void	default_color(t_var_stock *vars, int *j, char *a_line, char **points, int i)
+static void	core_put_in_tab(t_var_stock *array, char **points, char *str)
 {
-	if (vars[*j].z > 0)
+	if (array[0].j < array[0].len_total)
 	{
-		vars[*j].color = ft_strdup("ff00ffff");
-		if (!vars[*j].color)
+		array[array[0].j].z = ft_atoi(points[array[0].i])
+			* array[0].height_of_z;
+		array[array[0].j].x = (array[0].i) * array[0].zoom;
+		array[array[0].j].y = (array[0].j / array[0].line_size) * array[0].zoom;
+		array[array[0].j].color = ft_strlower(get_color(points[array[0].i]));
+		if (array[array[0].j].color == NULL)
 		{
-			free(a_line);
-			free(points[i]);
-			free(points);
-			while (i < *j)
+			if (array[array[0].j].z > 0)
 			{
-				free(vars[i].color);
-				i++;
+				array[array[0].j].color = ft_strdup("ff00ffff");
+				verif_4(array, points);
+				verif_3(str, array);
 			}
-			free(vars);
-			perror("Malloc error, transparent line.\n");
-			exit (EXIT_FAILURE);
-		}
-	}
-	else
-	{
-		vars[*j].color = ft_strdup("ff3070ff");
-		if (!vars[*j].color)
-		{
-			free(a_line);
-			free(points[i]);
-			free(points);
-			while (i < *j)
+			else
 			{
-				free(vars[i].color);
-				i++;
+				array[array[0].j].color = ft_strdup("ff3070ff");
+				verif_4(array, points);
+				verif_3(str, array);
 			}
-			free(vars);
-			perror("Malloc error, transparent line.\n");
-			exit (EXIT_FAILURE);
 		}
+		(array[0].j)++;
 	}
 }
 
-static int	put_line_in_tab(char *a_line, t_var_stock *vars, int *j)
+static int	put_line_in_tab(char *str, t_var_stock *array)
 {
 	char	**points;
 	int		i;
 
-	i = 0;
-	points = ft_split(a_line, ' ');
-	if (points == NULL)
-	{
-		free(a_line);
-		free(vars);
-		perror("malloc error");
-		exit (EXIT_FAILURE);
-	}
-	while (points[i] != NULL)
-	{
-		if (ft_isdigit(points[i][0]) == 0)
-		{
-			free(points);
-			free(a_line);
-			while (i < *j)
-			{
-				free(vars[*j].color);
-				i++;
-			}
-			free(vars);
-			perror("Bad digit.\n");
-			exit (EXIT_FAILURE);
-		}
-		if (*j < vars[0].line_size * vars[0].line_count)
-		{
-			vars[*j].z = (ft_atoi(points[i]) * 10);
-			vars[*j].x = (i * 1);
-			vars[*j].y = ((*j / vars[0].line_size) * 1);
-			vars[*j].color = ft_strlower(get_color(points[i]));
-			if (vars[*j].color == NULL)
-				default_color(vars, j, a_line, points, i);
-			*j += 1;
-		}
-		free(points[i]);
-		i++;
-	}
-	free(points[i]);
-	free(points);
-	if (i != vars[0].line_size)
+	points = ft_split(str, ' ');
+	if (!points)
+		verif_1(str, array);
+	array[0].i = 0;
+	while (points[array[0].i] != NULL)
 	{
 		i = 0;
-		while (i < *j)
-		{
+		while (points[array[0].i][i] == '-' || points[array[0].i][i] == '+')
 			i++;
+		if (ft_isdigit(points[array[0].i][i]) == 0)
+		{
+			ft_free_points(points, array);
+			verif_2(str, array);
 		}
-		free(vars);
-		perror("map error");
-		exit (EXIT_FAILURE);
+		core_put_in_tab(array, points, str);
+		free(points[array[0].i]);
+		(array[0].i)++;
 	}
+	free(points[array[0].i]);
+	free(points);
+	verif_5(array);
 	return (0);
 }
 
-static int	get_nb_lines(char *filename)
+int	put_map_in_tabs(char *fdname, t_var_stock **array)
 {
-	int		file;
-	char	*str;
-	int		i;
-
-	i = 0;
-	file = check_fd(filename);
-	str = get_next_line(file);
-	while (str != NULL)
-	{
-		free(str);
-		str = get_next_line(file);
-		i++;
-	}
-	close(file);
-	return (i);
-}
-
-int	put_map_in_tabs(char *filename, t_var_stock **vars)
-{
-	int32_t		file;
+	int			fd;
 	char		*str;
-	int			i;
-	int			nb_strs;
-	int			nb_lines;
 
-	file = check_fd(filename);
-	str = get_next_line(file);
+	fd = check_fd(fdname);
+	str = get_next_line(fd);
 	check_gnl(str);
-	nb_strs = get_nb_strs(str, ' ');
-	nb_lines = get_nb_lines(filename);
-	if (nb_strs == 0 || nb_lines == 0)
+	*array = ft_calloc(((get_nb_strs(str, ' '))
+				* get_nb_lines(fdname)), sizeof(t_var_stock));
+	if (!*array)
 	{
 		free(str);
-		close(file);
+		close(fd);
 		exit (EXIT_FAILURE);
 	}
-	*vars = ft_calloc((nb_strs * nb_lines), sizeof(t_var_stock));
-	if (*vars == NULL)
-	{
-		free(str);
-		close(file);
-		exit (EXIT_FAILURE);
-	}
-	i = 0;
-	(*vars[i]).line_size = nb_strs;
-	(*vars[i]).line_count = nb_lines;
+	give_value(*array, str, fdname);
 	while (str != NULL)
 	{
-		put_line_in_tab(str, *vars, &i);
+		put_line_in_tab(str, *array);
 		free(str);
-		str = get_next_line(file);
+		str = get_next_line(fd);
 	}
-	close(file);
+	close(fd);
 	return (0);
 }

@@ -4,7 +4,7 @@
 
 INCLUDES_PATH = ../../includes
 NAME		= libft.a
-CFLAGS		= -Wextra -Wall -Werror -I$(INCLUDES_PATH) -g3
+CFLAGS		= -Wextra -Wall -Werror -I$(INCLUDES_PATH)
 CC			= gcc
 
 ########################################

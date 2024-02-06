@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahans <allan.hans68350@gmail.com>          +#+  +:+       +#+        */
+/*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 11:02:30 by ahans             #+#    #+#             */
-/*   Updated: 2023/10/18 16:48:38 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/06 15:29:21 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_isdigit(int charac)
 {
-	if (charac < 48 || charac > 57)
+	if (charac < '0' || charac > '9')
 	{
 		return (0);
 	}

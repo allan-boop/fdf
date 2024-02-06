@@ -6,7 +6,7 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 13:56:47 by ahans             #+#    #+#             */
-/*   Updated: 2024/02/05 18:00:33 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/06 20:41:04 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,19 +62,13 @@ int32_t	main(int ac, char **av)
 	mlx_t		*mlx;
 	t_hook_pos	*hook;
 
-	mlx = NULL;
-	hook = malloc(sizeof(t_hook_pos));
 	if (ac != 2)
 		return (EXIT_FAILURE);
-	vars = NULL;
 	put_map_in_tabs(av[1], &vars);
-	mlx_set_setting(MLX_MAXIMIZED, false);
-	mlx = mlx_init(WIDTH, HEIGHT, "fdf", true);
-	if (!mlx)
-		return (EXIT_FAILURE);
-	img = mlx_new_image(mlx, WIDTH, HEIGHT);
-	if (!img || (mlx_image_to_window(mlx, img, 0, 0) < 0))
-		return (EXIT_FAILURE);
+	hook = malloc(sizeof(t_hook_pos));
+	if (!hook)
+		return (0);
+	create_mlx(&mlx, &img);
 	hook->mlx = mlx;
 	hook->img = img;
 	hook->vars = vars;

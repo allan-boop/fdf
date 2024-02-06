@@ -6,7 +6,7 @@
 /*   By: ahans <ahans@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 19:29:23 by ahans             #+#    #+#             */
-/*   Updated: 2024/02/05 11:04:38 by ahans            ###   ########.fr       */
+/*   Updated: 2024/02/06 20:13:55 by ahans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ static void	ft_rotate(t_hook_pos *hook, mlx_t *mlx)
 	rotation_handler(hook);
 }
 
-
 void	ft_hook(void *param)
 {
 	mlx_t		*mlx;
@@ -100,6 +99,5 @@ void	ft_hook(void *param)
 
 	hook = param;
 	mlx = hook->mlx;
-
 	ft_rotate(hook, mlx);
 }
